@@ -3,22 +3,42 @@
 Catalog
 {% endblock %}
 {% block content %}
+
+<form method="get" action="http://localhost:5000/catalog/search">
+    <select name="colName" id="colName">
+        {% for i in range(colNames|length) %}
+        <option value={{colNames[i]}}>{{colNames[i]}}</option>
+        {% endfor %}
+    </select>
+    <select name="comparator" id="comparator">
+        <option value="=">=</option>
+        <option value=">">></option>
+        <option value="<"><</option>
+        <option value=">=">⩾</option>
+        <option value="<=">⩽</option>
+    </select>
+    <input type="search" id="searchInput" name="searchInput" required>
+    <button type="submit">Search</button>
+</form>
+
 <table>
     <thead>
         <tr>
-            {% for col in colnames %}
+            {% for col in colNames %}
             <th>{{ col }}</th>
             {% endfor %}
         </tr>
     </thead>
     <tbody>
         {% for record in records %}
-        <tr>
-            {% for col in colnames %}
+        {% set link = "location.href='/record/"+record["pl_name"]+"'" %}
+        <tr onclick={{link}}>
+            {% for col in colNames %}
             <td>{{ record[col] }}</td>
             {% endfor %}
         </tr>
         {% endfor %}
     </tbody> 
 </table>
+
 {% endblock %}
