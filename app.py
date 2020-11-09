@@ -20,7 +20,7 @@ for col in colNames:
     for row in records:
         if row[col]!="nan":
             colTypes.append(type(row[col]).__name__)
-            break;
+            break
 colTypes[31]="str" #to avoid NoneType
 
 @app.route("/")
