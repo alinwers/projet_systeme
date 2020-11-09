@@ -1,7 +1,8 @@
 from flask import Flask, render_template,request
 import json, pandas as pd
-import os
 from math import trunc
+from numpy import isnan
+
 
 def truncate(nb,digits):
     powerOfTen=10**digits
@@ -13,7 +14,16 @@ jsonFile = open("static/database.json","r")
 db = pd.read_json(jsonFile)
 records = db.to_dict('records')
 colNames = db.columns.values
-#displayedColNames = ["Host Name","Planet Letter","Planet Name","Discovery Method","Controversial Flag","Number of Planets in System","Orbital Period [days]","Orbit Semi-Major Axis [au]","Eccentricity","Inclination [deg]","Planet Mass or M*sin(i) [Jupiter Mass]","Planet Mass or M*sin(i) Provenance","Planet Radius [Jupiter radii]","Planet Density [g/cm**3]","TTV Flag","Kepler Field Flag","K2 Mission Flag","Number of Notes","RA [sexagesimal]","Dec [sexagesimal]","Distance [pc]","Gaia Distance [pc]","Optical Magnitude [mag]","Optical Magnitude Band","G-band (Gaia) [mag]","Effective Temperature [K]","Stellar Mass [Solar mass]","Stellar Radius [Solar radii]","Date of Last Update","Discovery Facility"]
+#displayedColNames = ["Host Name","Planet Letter","Planet Name","Discovery Method","Controversial Flag","Number of Planets in System","Orbital Period [days]"
+# ,"Orbit Semi-Major Axis [au]","Eccentricity","Inclination [deg]","Planet Mass or M*sin(i) [Jupiter Mass]","Planet Mass or M*sin(i) Provenance",
+# "Planet Radius [Jupiter radii]","Planet Density [g/cm**3]","TTV Flag","Kepler Field Flag","K2 Mission Flag","Number of Notes","RA [sexagesimal]",
+# "Dec [sexagesimal]","Distance [pc]","Gaia Distance [pc]","Optical Magnitude [mag]","Optical Magnitude Band","G-band (Gaia) [mag]","Effective Temperature [K]",
+# "Stellar Mass [Solar mass]","Stellar Radius [Solar radii]","Date of Last Update","Discovery Facility"]
+
+for i in range(0, len(records)):
+    for key in records[i]:
+        if isinstance(records[i][key], float) and str(records[i][key]) != "nan":
+            records[i][key] = truncate(records[i][key], 6)
 
 colTypes=[]
 for col in colNames:
@@ -22,6 +32,7 @@ for col in colNames:
             colTypes.append(type(row[col]).__name__)
             break
 colTypes[31]="str" #to avoid NoneType
+
 
 @app.route("/")
 def home():
@@ -75,5 +86,3 @@ def record():
 @app.route("/graph/")
 def graph():
     return render_template("graph.html")
-
-app.run()
