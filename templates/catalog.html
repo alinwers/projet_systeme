@@ -30,11 +30,11 @@ Catalog
         </tr>
     </thead>
     <tbody>
-        {% for record in records %}
-        {% set link = "location.href='/record/"+record["pl_name"]+"'" %}
+        {% for i in range(records|length) %}
+        {% set link = "location.href='/record/"+i|string+"'" %}
         <tr class = "border" onclick={{link}}>
             {% for col in colNames %}
-            <td id = "tdData">{{ record[col] }}</td>
+            <td id = "tdData">{{ records[i][col] }}</td>
             {% endfor %}
         </tr>
         {% endfor %}
