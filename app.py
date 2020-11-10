@@ -96,8 +96,8 @@ def search():
                 
     return render_template("catalog.html",records=searchedRecords,colNames=colNames, displayedColNames=displayedColNames)
 
-@app.route("/record/")
-def record():
+@app.route("/record/<index>")
+def record(index):
     index=int(index)
     record=records[index]
     return render_template("record.html",record=record,isnan=isnan)
