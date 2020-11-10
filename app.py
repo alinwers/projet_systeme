@@ -46,7 +46,7 @@ try:
                 else:
                     colTypes.append(typeStr)
                 break
-    colTypes[31]="str" #to avoid NoneType
+
 except IOError:
     print("JSON file not found")
 
