@@ -90,7 +90,7 @@ def search():
             if searchInput in record[colName]:
                 searchedRecords.append(record)
                 
-    return render_template("catalog.html",records=searchedRecords,colNames=colNames)
+    return render_template("catalog.html",records=searchedRecords,colNames=colNames, displayedColNames=displayedColNames)
 
 @app.route("/record/")
 def record():
