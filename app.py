@@ -33,7 +33,7 @@ try:
 
     for i in range(len(records)):
         for key in records[i]:
-            if isinstance(records[i][key], float):
+            if isinstance(records[i][key], float) and str(records[i][key]) != "nan":
                 records[i][key] = truncate(records[i][key], 6)
 
     colTypes=[]
