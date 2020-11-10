@@ -46,6 +46,7 @@ tr.border {
     text-align: center;
     background-color: lightgray;
     width: auto;
+    font-size: 0.9em;
 }
 
 #tdData {
