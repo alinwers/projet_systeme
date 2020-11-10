@@ -1,3 +1,9 @@
+
+.message {
+    font-weight: 600;
+    color: blue;
+}
+
 .navbar {
     background-color: lightslategray;
     font-size: 1em;
@@ -26,32 +32,45 @@
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-table {
-    border-spacing: 0;
+.row:hover {
+    background-color: lightgrey;
 }
 
-#tableData {
-    position: absolute top 300px;
+.recordTable {
+    border-collapse: collapse;
 }
 
-th {
-    padding: 5px;
+.recordTable td {
+    border-top-color: lightgrey;
+    border-bottom-color: lightgrey;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 30px;
+    padding-left: 10px;
+    background-color: whitesmoke;
 }
 
-tr.border {
-    outline: thin solid;
+.leftTables {
+    float: left;
 }
 
-#trNames {
-    text-align: center;
-    background-color: lightgray;
-    width: auto;
-    font-size: 0.9em;
+.rightTables {
+    float: right;
 }
 
-#tdData {
-    width: auto;
-    overflow: hidden;
-    text-align: center;
-    padding: 5px;
+.recordTablesDiv {
+    width: 55%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+hr {
+    clear: both;
+    border: none;
+    border-bottom: 2px solid;
+    padding-top: 20px;
 }
