@@ -68,6 +68,33 @@
     margin-right: auto;
 }
 
+#tableData {
+    position: absolute top 300px;
+    border-spacing: 0;
+}
+
+#tableData th {
+    padding: 5px;
+}
+
+#tableData tr.border {
+    outline: thin solid;
+}
+
+#trNames {
+    text-align: center;
+    background-color: lightgray;
+    width: auto;
+    font-size: 0.9em;
+}
+
+#tdData {
+    width: auto;
+    overflow: hidden;
+    text-align: center;
+    padding: 5px;
+}
+
 hr {
     clear: both;
     border: none;
