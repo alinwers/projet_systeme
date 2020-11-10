@@ -31,16 +31,20 @@ try:
     "Stellar Mass Limit Flag", "Stellar Mass Measurements", "Stellar Radius [Solar radii]", "Stellar Radius Upper Unc. [Solar radii]", "Stellar Radius Lower Unc. [Solar radii]",
     "Stellar Radius Limit Flag", "Stellar Radius Measurements", "Number of Notes", "Date of Last Update", "Discovery Facility"]
 
-    for i in range(0, len(records)):
+    for i in range(len(records)):
         for key in records[i]:
-            if isinstance(records[i][key], float) and str(records[i][key]) != "nan":
+            if isinstance(records[i][key], float):
                 records[i][key] = truncate(records[i][key], 6)
 
     colTypes=[]
     for col in colNames:
         for row in records:
             if row[col]!="nan":
-                colTypes.append(type(row[col]).__name__)
+                typeStr = type(row[col]).__name__
+                if typeStr=="NoneType":
+                    colTypes.append("str")
+                else:
+                    colTypes.append(typeStr)
                 break
     colTypes[31]="str" #to avoid NoneType
 except IOError:
@@ -94,7 +98,9 @@ def search():
 
 @app.route("/record/")
 def record():
-    return "record"
+    index=int(index)
+    record=records[index]
+    return render_template("record.html",record=record,isnan=isnan)
 
 @app.route("/graph/")
 def graph():
