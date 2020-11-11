@@ -46,10 +46,16 @@ try:
                 else:
                     colTypes.append(typeStr)
                 break
-
+            
 except IOError:
     print("JSON file not found")
+    
+def eqComparator(searchInput,observedValue):
+    if searchInput==observedValue:
+        searchedRecords.append(record)
 
+def supComparator(searchInput,observedValue):
+    pass
 
 @app.route("/")
 def home():
@@ -71,6 +77,7 @@ def search():
     comparator = formData["comparator"]
     searchedRecords = []
     colType = colTypes[list(colNames).index(colName)]
+    
     
     if colType=="int":
         searchInput=int(searchInput)
@@ -105,3 +112,4 @@ def record(index):
 @app.route("/graph/")
 def graph():
     return render_template("graph.html")
+
