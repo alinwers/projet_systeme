@@ -5,12 +5,12 @@ Catalog
 {% block content %}
 
 <form method="get" action="http://localhost:5000/catalog/search">
-    <select name="colName" id="colName">
-        {% for i in range(colNames|length) %}
-        <option value={{colNames[i]}}>{{colNames[i]}}</option>
+    <select name="colName" id="colName" onChange="checkComparatorDisplaying()">
+        {% for col in displayedColNames %}
+        <option value={{col}}>{{col}}</option>
         {% endfor %}
     </select>
-    <select name="comparator" id="comparator">
+    <select name="comparator" id="comparator" style="display: none;">
         <option value="=">=</option>
         <option value=">">></option>
         <option value="<"><</option>
@@ -20,6 +20,21 @@ Catalog
     <input type="search" id="searchInput" name="searchInput" required>
     <button type="submit">Search</button>
 </form>
+
+<script>
+function checkComparatorDisplaying() {
+    var selectedIndex = document.getElementById("colName").selectedIndex;
+    var comparatorDisplay = document.getElementById("comparator").style.display;
+    if ({{colTypes[selectedIndex]}}=="str") {
+        comparatorDisplay="none";
+        alert("if");
+    }
+    else {
+        comparatorDisplay="block";
+        alert("else");
+    } 
+}
+</script>
 
 <table id = "tableData">
     <thead>
