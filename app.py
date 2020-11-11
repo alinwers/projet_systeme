@@ -67,7 +67,7 @@ def get_data():
 
 @app.route("/catalog/")
 def catalog():
-    return render_template("catalog.html",records=records,colNames=colNames,displayedColNames=displayedColNames,colTypes=colTypes)
+    return render_template("catalog.html",records=records,colNames=colNames,displayedColNames=displayedColNames,colTypes=json.dumps(colTypes))
 
 @app.route("/catalog/search/",methods=["GET","POST"])
 def search():
