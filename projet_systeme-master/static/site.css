@@ -1,0 +1,107 @@
+
+.message {
+    font-weight: 600;
+    color: blue;
+}
+
+.navbar {
+    background-color: lightslategray;
+    font-size: 1em;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: white;
+    padding: 8px 5px 8px 5px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar-brand {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.navbar-item {
+    font-variant: small-caps;
+    margin-left: 30px;
+}
+
+.body-content {
+    padding: 5px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.row:hover {
+    background-color: lightgrey;
+}
+
+.recordTable {
+    border-collapse: collapse;
+}
+
+.recordTable td {
+    border-top-color: lightgrey;
+    border-bottom-color: lightgrey;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 30px;
+    padding-left: 10px;
+    background-color: whitesmoke;
+}
+
+.leftTables {
+    float: left;
+}
+
+.rightTables {
+    float: right;
+}
+
+.recordTablesDiv {
+    width: 55%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#tableData {
+    margin-top: 20px;
+    border-spacing: 0;
+}
+
+#tableData th {
+    padding: 5px;
+}
+
+#tableData tr:hover {
+    background-color: lightgrey;
+}
+
+#tableData tr.border {
+    outline: thin solid;
+}
+
+#trNames {
+    text-align: center;
+    background-color: lightgray;
+    width: auto;
+    font-size: 0.9em;
+}
+
+#tdData {
+    width: auto;
+    overflow: hidden;
+    text-align: center;
+    padding: 5px;
+}
+
+hr {
+    clear: both;
+    border: none;
+    border-bottom: 2px solid;
+    padding-top: 20px;
+}
