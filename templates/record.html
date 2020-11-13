@@ -13,8 +13,8 @@
             {% if record[valueKey+"err1"]==-record[valueKey+"err2"] %}
                 <span>±{{record[valueKey+"err1"]}}</span>
             {% else %}
-                <span class="maxError">+{{record[valueKey+"err1"]}}</span>
-                <span class="minError">-{{record[valueKey+"err2"]}}</span>
+                <sup class="maxError">+{{record[valueKey+"err1"]}}</sup>
+                <sub class="minError">{{record[valueKey+"err2"]}}</sub>
             {% endif %}
         {% endif %}
     {% endif %}

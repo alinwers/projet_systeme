@@ -6,12 +6,14 @@ Catalog
 
 <form method="get" action="http://localhost:5000/catalog/search">
     <select name="colName" id="colName" onChange="checkComparatorDisplaying()">
-        {% for col in displayedColNames %}
-        <option value={{col}}>{{col}}</option>
+        {% for i in range(displayedColNames|length) %}
+        <option value={{i}}>{{displayedColNames[i]}}</option>
         {% endfor %}
     </select>
     <select name="comparator" id="comparator" style="display: none;">
         <option value="=">=</option>
+        <option value="≃" style="display: none;" id="aroundComparator">≃</option>
+        <option value="truncated" style="display: none;" id="truncatedToComparator">truncated to</option>
         <option value=">">></option>
         <option value="<"><</option>
         <option value=">=">⩾</option>
@@ -22,20 +24,32 @@ Catalog
 </form>
 
 <script>
+var colTypes = JSON.parse({{colTypes|tojson}});
+var comparator = document.getElementById("comparator");
+var aroundComparator = document.getElementById("aroundComparator");
+var truncatedToComparator = document.getElementById("pdtruncatedToComparator");
+
 function checkComparatorDisplaying() {
     var selectedIndex = document.getElementById("colName").selectedIndex;
-    var comparatorDisplay = document.getElementById("comparator").style.display;
-    if ({{colTypes[selectedIndex]}}=="str") {
-        comparatorDisplay="none";
-        alert("if");
+    if (colTypes[selectedIndex]=="str") {
+        comparator.style.display="none";
     }
     else {
-        comparatorDisplay="block";
-        alert("else");
+        comparator.style.display="inline";
+        if (colTypes[selectedIndex]=="float") {
+            aroundComparator.style.display="inline";
+            truncatedToComparator.style.display="inline";
+        }
+        else {
+            aroundComparator.style.display="none";
+            truncatedToComparator.style.display="none"
+            comparator.selectedIndex="0";
+        }
     } 
 }
 </script>
 
+<button onclick="exportToCSV()" style="margin-top: 15px;">Export</button>
 <table id = "tableData">
     <thead>
         <tr class = "border" id = "trNames">
@@ -56,4 +70,45 @@ function checkComparatorDisplaying() {
     </tbody> 
 </table>
 
+
+<!--
+{% set dico = {"csvData":""} %}
+{% for col in colNames %}
+    {% if dico.update({"csvData":dico.csvData+col}) %}{%endif%}
+    {% if not loop.last %}
+        {% if dico.update({"csvData":dico.csvData+","}) %}{%endif%}
+    {% endif %}
+{% endfor %}
+{% if dico.update({"csvData":dico.csvData+"NEWLINE"}) %}{%endif%}
+{% for i in range(records|length) %}
+    {% for col in colNames %}
+        {% if dico.update({"csvData":dico.csvData+records[i][col]|string}) %}{%endif%}    
+        {% if not loop.last %}
+            {% if dico.update({"csvData":dico.csvData+","}) %}{%endif%}
+        {% endif %}
+    {% endfor %}
+    {% if dico.update({"csvData":dico.csvData+"NEWLINE"}) %}{%endif%}
+{% endfor %}
+
+<script>
+var fileURL = null;
+function exportToCSV() {
+    var csvData="{{dico.csvData}}";
+    csvData=csvData.replaceAll("NEWLINE","\n");
+    var data = new Blob([csvData],{type:"text/plain"});
+    
+    if (fileURL!=null){
+    }
+    fileURL=window.URL.createObjectURL(data);    
+    
+    var link=document.createElement("a");
+    link.setAttribute("href",fileURL)
+    link.setAttribute("download","table.csv")
+    document.body.append(link);
+    link.click();
+    link.remove();
+    //rendre utilisable deux fois dans la page
+}
+</script>
+-->
 {% endblock %}
