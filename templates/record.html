@@ -25,7 +25,6 @@
 function exportRecord() {
     const toExport = document.getElementById("recordTablesDiv");
     
-    
     html2canvas(document.querySelector("#capture")).then(canvas => {
         document.body.appendChild(canvas)
     });
@@ -34,57 +33,57 @@ function exportRecord() {
 </script>
 
 <div class="recordTablesDiv" id="recordTablesDiv">
-<h1>Planet {{record["pl_name"]}}</h1>
+    <h1>Planet {{record["pl_name"]}}</h1>
 
-<div class="leftTables">
-<table class="recordTable" id="discoveryTable">
-<h2>Discovery characteristics</h2>
-    <tr><td>Discovery Method</td><td>{{record["pl_discmethod"]}}</td></tr>
-    <tr><td>TTV from another planet</td><td>{%if record["pl_ttvflag"]==0%}{{"No"}}{%elif record["pl_ttvflag"]==1%}{{"Yes"}}{%endif%}</td></tr>
-    <tr><td>Planetary system signature in data of Kepler mission</td><td>{%if record["pl_kepflag"]==0%}{{"No"}}{%elif record["pl_kepflag"]==1%}{{"Yes"}}{%endif%}</td></tr>
-    <tr><td>Planetary system signature in data of K2 mission</td><td>{%if record["pl_k2flag"]==0%}{{"No"}}{%elif record["pl_k2flag"]==1%}{{"Yes"}}{%endif%}</td></tr>
-    <tr><td>Date of Last Update</td><td>{{record["rowupdate"]}}</td></tr>
-    <tr><td>Discovery Facility</td><td>{{record["pl_facility"]}}</td></tr>
-    <tr><td>Controversial Flag</td><td>{%if record["pl_controvflag"]==0%}{{"No"}}{%elif record["pl_controvflag"]==1%}{{"Yes"}}{%endif%}</td></tr>
-</table>
+    <div class="leftTables">
+        <table class="recordTable" id="discoveryTable">
+            <h2>Discovery characteristics</h2>
+            <tr><td>Discovery Method</td><td>{{record["pl_discmethod"]}}</td></tr>
+            <tr><td>TTV from another planet</td><td>{%if record["pl_ttvflag"]==0%}{{"No"}}{%elif record["pl_ttvflag"]==1%}{{"Yes"}}{%endif%}</td></tr>
+            <tr><td>Planetary system signature in data of Kepler mission</td><td>{%if record["pl_kepflag"]==0%}{{"No"}}{%elif record["pl_kepflag"]==1%}{{"Yes"}}{%endif%}</td></tr>
+            <tr><td>Planetary system signature in data of K2 mission</td><td>{%if record["pl_k2flag"]==0%}{{"No"}}{%elif record["pl_k2flag"]==1%}{{"Yes"}}{%endif%}</td></tr>
+            <tr><td>Date of Last Update</td><td>{{record["rowupdate"]}}</td></tr>
+            <tr><td>Discovery Facility</td><td>{{record["pl_facility"]}}</td></tr>
+            <tr><td>Controversial Flag</td><td>{%if record["pl_controvflag"]==0%}{{"No"}}{%elif record["pl_controvflag"]==1%}{{"Yes"}}{%endif%}</td></tr>
+        </table>
 
-<table class="recordTable" id="astrometryTable">
-<h2>Astrometric characteristics</h2>
-    <tr><td>RA [sexagesimal]</td><td>{{record["ra_str"]}}</td></tr>
-    <tr><td>Dec [sexagesimal]</td><td>{{record["dec_str"]}}</td></tr>
-    <tr><td>Distance [pc]</td><td>{{valueWithUncertainty("st_dist")}}</td></tr>
-    <tr><td>Optical Magnitude [mag]</td><td>{{record["st_optmag"]}}</td></tr>
-    <tr><td>Optical Magnitude Band</td><td>{{record["st_optband"]}}</td></tr>
-    <tr><td>G-band (Gaia) [mag]</td><td>{{record["gaia_gmag"]}}</td></tr>
-</table>
+        <table class="recordTable" id="astrometryTable">
+            <h2>Astrometric characteristics</h2>
+            <tr><td>RA [sexagesimal]</td><td>{{record["ra_str"]}}</td></tr>
+            <tr><td>Dec [sexagesimal]</td><td>{{record["dec_str"]}}</td></tr>
+            <tr><td>Distance [pc]</td><td>{{valueWithUncertainty("st_dist")}}</td></tr>
+            <tr><td>Optical Magnitude [mag]</td><td>{{record["st_optmag"]}}</td></tr>
+            <tr><td>Optical Magnitude Band</td><td>{{record["st_optband"]}}</td></tr>
+            <tr><td>G-band (Gaia) [mag]</td><td>{{record["gaia_gmag"]}}</td></tr>
+        </table>
 
-<table class="recordTable" id="physicalTable">
-<h2>Physical characteristics</h2>
-    <tr><td>Planet Mass or M*sin(i) [Jupiter Mass]</td><td>{{valueWithUncertainty("pl_bmassj")}}</td></tr>
-    <tr><td>Planet Mass or M*sin(i) Provenance</td><td>{{record["pl_bmassprov"]}}</td></tr>
-    <tr><td>Planet Radius [Jupiter radii]</td><td>{{valueWithUncertainty("pl_radj")}}</td></tr>
-    <tr><td>Planet Density [g/cm**3]</td><td>{{valueWithUncertainty("pl_dens")}}</td></tr>
-</table>
-</div>
+        <table class="recordTable" id="physicalTable">
+            <h2>Physical characteristics</h2>
+            <tr><td>Planet Mass or M*sin(i) [Jupiter Mass]</td><td>{{valueWithUncertainty("pl_bmassj")}}</td></tr>
+            <tr><td>Planet Mass or M*sin(i) Provenance</td><td>{{record["pl_bmassprov"]}}</td></tr>
+            <tr><td>Planet Radius [Jupiter radii]</td><td>{{valueWithUncertainty("pl_radj")}}</td></tr>
+            <tr><td>Planet Density [g/cm**3]</td><td>{{valueWithUncertainty("pl_dens")}}</td></tr>
+        </table>
+    </div>
 
-<div class="rightTables">
-<table class="recordTable" id="orbitTable">
-<h2>Orbital characteristics</h2>
-    <tr><td>Orbital Period [days]</td><td>{{valueWithUncertainty("pl_orbper")}}</td></tr>
-    <tr><td>Orbit Semi-Major Axis [au]</td><td>{{valueWithUncertainty("pl_orbsmax")}}</td></tr>
-    <tr><td>Eccentricity</td><td>{{valueWithUncertainty("pl_orbeccen")}}</td></tr>
-    <tr><td>Inclination [deg]</td><td>{{valueWithUncertainty("pl_orbincl")}}</td></tr>
-</table>
+    <div class="rightTables">
+        <table class="recordTable" id="orbitTable">
+            <h2>Orbital characteristics</h2>
+            <tr><td>Orbital Period [days]</td><td>{{valueWithUncertainty("pl_orbper")}}</td></tr>
+            <tr><td>Orbit Semi-Major Axis [au]</td><td>{{valueWithUncertainty("pl_orbsmax")}}</td></tr>
+            <tr><td>Eccentricity</td><td>{{valueWithUncertainty("pl_orbeccen")}}</td></tr>
+            <tr><td>Inclination [deg]</td><td>{{valueWithUncertainty("pl_orbincl")}}</td></tr>
+        </table>
 
-<table class="recordTable" id="starTable">
-<h2>Star characteristics</h2>
-    <tr><td>Host Name</td><td>{{record["pl_hostname"]}}</td></tr>
-    <tr><td>Number of Planets in System</td><td>{{record["pl_pnum"]}}</td></tr>
-    <tr><td>Effective Temperature [K]</td><td>{{valueWithUncertainty("st_teff")}}</td></tr>
-    <tr><td>Stellar Mass [Solar mass]</td><td>{{valueWithUncertainty("st_mass")}}</td></tr>
-    <tr><td>Stellar Radius [Solar radii]</td><td>{{valueWithUncertainty("st_rad")}}</td></tr>
-</table>
-</div>
+        <table class="recordTable" id="starTable">
+            <h2>Star characteristics</h2>
+            <tr><td>Host Name</td><td>{{record["pl_hostname"]}}</td></tr>
+            <tr><td>Number of Planets in System</td><td>{{record["pl_pnum"]}}</td></tr>
+            <tr><td>Effective Temperature [K]</td><td>{{valueWithUncertainty("st_teff")}}</td></tr>
+            <tr><td>Stellar Mass [Solar mass]</td><td>{{valueWithUncertainty("st_mass")}}</td></tr>
+            <tr><td>Stellar Radius [Solar radii]</td><td>{{valueWithUncertainty("st_rad")}}</td></tr>
+        </table>
+    </div>
 </div>
 
 
