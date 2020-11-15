@@ -1,4 +1,3 @@
-
 .message {
     font-weight: 600;
     color: blue;
@@ -93,15 +92,20 @@
     background-color: lightgrey;
 }
 
-#tableData tr.border {
+#tableData .border {
     outline: thin solid;
 }
 
-#trNames {
+tr .border {
+    outline: thin solid;
+}
+
+#theadData {
     text-align: center;
     background-color: lightgray;
     width: auto;
     font-size: 0.9em;
+    outline: thin solid;
 }
 
 #tdData {
@@ -117,3 +121,4 @@ hr {
     border-bottom: 2px solid;
     padding-top: 20px;
 }
+
