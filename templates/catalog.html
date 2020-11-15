@@ -24,37 +24,46 @@ Catalog
 </form>
 
 <script>
-var colTypes = JSON.parse({{colTypes|tojson}});
-var comparator = document.getElementById("comparator");
-var aroundComparator = document.getElementById("aroundComparator");
-var truncatedToComparator = document.getElementById("pdtruncatedToComparator");
+    var colTypes = JSON.parse({{colTypes|tojson}});
+    var comparator = document.getElementById("comparator");
+    var aroundComparator = document.getElementById("aroundComparator");
+    var truncatedToComparator = document.getElementById("pdtruncatedToComparator");
 
-function checkComparatorDisplaying() {
-    var selectedIndex = document.getElementById("colName").selectedIndex;
-    if (colTypes[selectedIndex]=="str") {
-        comparator.style.display="none";
-    }
-    else {
-        comparator.style.display="inline";
-        if (colTypes[selectedIndex]=="float") {
-            aroundComparator.style.display="inline";
-            truncatedToComparator.style.display="inline";
+    function checkComparatorDisplaying() {
+        var selectedIndex = document.getElementById("colName").selectedIndex;
+        if (colTypes[selectedIndex]=="str") {
+            comparator.style.display="none";
         }
         else {
-            aroundComparator.style.display="none";
-            truncatedToComparator.style.display="none"
-            comparator.selectedIndex="0";
-        }
-    } 
-}
+            comparator.style.display="inline";
+            if (colTypes[selectedIndex]=="float") {
+                aroundComparator.style.display="inline";
+                truncatedToComparator.style.display="inline";
+            }
+            else {
+                aroundComparator.style.display="none";
+                truncatedToComparator.style.display="none"
+                comparator.selectedIndex="0";
+            }
+        } 
+    }
 </script>
+
+
+<fieldset>
+    {% for col in colNames %}
+        <input type = "checkbox" name = "{{col}}" checked = "checked">
+        <label for="col">{{displayedColNames[loop.index0]}}</label>
+    {% endfor %}
+</fieldset>
+
 
 <button onclick="exportToCSV()" style="margin-top: 15px;">Export</button>
 <table id = "tableData">
-    <thead>
-        <tr class = "border" id = "trNames">
+    <thead id = "theadData">
+        <tr>
             {% for col in displayedColNames %}
-            <th>{{ col }}</th>
+            <th class = "{{colNames[loop.index0]}}">{{ col }}</th>
             {% endfor %}
         </tr>
     </thead>
@@ -63,52 +72,23 @@ function checkComparatorDisplaying() {
         {% set link = "location.href='/record/"+i|string+"'" %}
         <tr class = "border" onclick={{link}}>
             {% for col in colNames %}
-            <td id = "tdData">{{ records[i][col] }}</td>
+            <td class = "{{col}}" id = "tdData">{{ records[i][col] }}</td>
             {% endfor %}
         </tr>
         {% endfor %}
     </tbody> 
 </table>
 
-
-<!--
-{% set dico = {"csvData":""} %}
-{% for col in colNames %}
-    {% if dico.update({"csvData":dico.csvData+col}) %}{%endif%}
-    {% if not loop.last %}
-        {% if dico.update({"csvData":dico.csvData+","}) %}{%endif%}
-    {% endif %}
-{% endfor %}
-{% if dico.update({"csvData":dico.csvData+"NEWLINE"}) %}{%endif%}
-{% for i in range(records|length) %}
-    {% for col in colNames %}
-        {% if dico.update({"csvData":dico.csvData+records[i][col]|string}) %}{%endif%}    
-        {% if not loop.last %}
-            {% if dico.update({"csvData":dico.csvData+","}) %}{%endif%}
-        {% endif %}
-    {% endfor %}
-    {% if dico.update({"csvData":dico.csvData+"NEWLINE"}) %}{%endif%}
-{% endfor %}
-
 <script>
-var fileURL = null;
-function exportToCSV() {
-    var csvData="{{dico.csvData}}";
-    csvData=csvData.replaceAll("NEWLINE","\n");
-    var data = new Blob([csvData],{type:"text/plain"});
-    
-    if (fileURL!=null){
-    }
-    fileURL=window.URL.createObjectURL(data);    
-    
-    var link=document.createElement("a");
-    link.setAttribute("href",fileURL)
-    link.setAttribute("download","table.csv")
-    document.body.append(link);
-    link.click();
-    link.remove();
-    //rendre utilisable deux fois dans la page
-}
+    $("input:checkbox:not(:checked)").each(function() {
+        var column = "table ." + $(this).attr("name");
+        $(column).hide();
+    });
+
+    $("input:checkbox").click(function(){
+        var column = "table ." + $(this).attr("name");
+        $(column).toggle();
+    });
 </script>
--->
+
 {% endblock %}
