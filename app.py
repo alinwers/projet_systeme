@@ -97,6 +97,7 @@ displayedColNames = ["Host Name", "Planet Letter", "Planet Name", "Discovery Met
 "Stellar Radius Limit Flag", "Stellar Radius Measurements", "Number of Notes", "Date of Last Update", "Discovery Facility"]
 
 records,colNames,colTypes=loadJson()
+colNamesList=colNames.tolist()
 
 @app.route("/")
 def home():
@@ -108,7 +109,7 @@ def get_data():
 
 @app.route("/catalog/")
 def catalog():
-    return render_template("catalog.html",records=records,colNames=colNames,displayedColNames=displayedColNames,colTypes=dumps(colTypes))
+    return render_template("catalog.html",records=records,colNames=colNames,colNamesList=colNamesList,displayedColNames=displayedColNames,colTypes=colTypes)
 
 @app.route("/catalog/search/",methods=["GET","POST"])
 def search():
@@ -138,7 +139,7 @@ def search():
             if str(observedValue)!="nan" and comparatorToComparison[comparator](searchInput,observedValue,digits):
                 searchedRecords.append(record)
         
-    return render_template("catalog.html",records=searchedRecords,colNames=colNames,displayedColNames=displayedColNames,colTypes=dumps(colTypes))
+    return render_template("catalog.html",records=searchedRecords,colNames=colNames,colNamesList=colNamesList,displayedColNames=displayedColNames,colTypes=colTypes)
 
 @app.route("/record/<index>")
 def record(index):
@@ -155,4 +156,6 @@ def refresh():
 @app.route("/graph/")
 def graph():
     return render_template("graph.html")
+
+app.run()
 
