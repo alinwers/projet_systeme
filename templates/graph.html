@@ -3,5 +3,109 @@
 Graph
 {% endblock %}
 {% block content %}
-<p>Graph page.</p>
+
+<div id = "graph-menu">
+    <p>
+        <label for = "x-select"> X axis:</label>
+        <select name = "x-select">
+            <option value = "">--Chose an x axis--</option>
+            <optgroup label="Planet parameters">
+                <option value = "{{colNames[5]}}">Number of Planets in System</option>
+                <option value = "{{colNames[6]}}">Orbital Period [days]</option>
+                <option value = "{{colNames[11]}}">Orbit Semi-Major Axis [au]</option>
+                <option value = "{{colNames[16]}}">Eccentricity</option>
+                <option value = "{{colNames[21]}}">Inclination [deg]</option>
+                <option value = "{{colNames[26]}}">Planet Mass or M*sin(i) [Jupiter mass]</option>
+                <option value = "{{colNames[32]}}">Planet Radius [Jupiter radii]</option>
+                <option value = "{{colNames[37]}}">Planet Density [g/cm**3]</option>
+            </optgroup>
+            <optgroup label="Star parameters">
+                <option value = "{{colNames[45]}}">RA [sexagesimal]</option>
+                <option value = "{{colNames[46]}}">Dec [sexagesimal]</option>
+                <option value = "{{colNames[47]}}">RA [decimal degrees]</option>
+                <option value = "{{colNames[49]}}">Dec [decimal degrees]</option>
+                <option value = "{{colNames[52]}}">Distance [pc]</option>
+                <option value = "{{colNames[57]}}">Optical Magnitude [mag]</option>
+                <option value = "{{colNames[61]}}">G-band (Gaia) [mag]</option>
+                <option value = "{{colNames[64]}}">Effective Temperature [K]</option>
+                <option value = "{{colNames[69]}}">Stellar Mass [Solar mass]</option>
+                <option value = "{{colNames[74]}}">Stellar Radius [Solar radii]</option>
+            </optgroup>
+        </select>
+    </p>
+    <p>
+        <label for = "y-select"> Y axis:</label>
+        <select name = "y-select">
+            <option value = "">--Chose an y axis--</option>
+            <optgroup label="Planet parameters">
+                <option value = "{{colNames[5]}}">Number of Planets in System</option>
+                <option value = "{{colNames[6]}}">Orbital Period [days]</option>
+                <option value = "{{colNames[11]}}">Orbit Semi-Major Axis [au]</option>
+                <option value = "{{colNames[16]}}">Eccentricity</option>
+                <option value = "{{colNames[21]}}">Inclination [deg]</option>
+                <option value = "{{colNames[26]}}">Planet Mass or M*sin(i) [Jupiter mass]</option>
+                <option value = "{{colNames[32]}}">Planet Radius [Jupiter radii]</option>
+                <option value = "{{colNames[37]}}">Planet Density [g/cm**3]</option>
+            </optgroup>
+            <optgroup label="Star parameters">
+                <option value = "{{colNames[45]}}">RA [sexagesimal]</option>
+                <option value = "{{colNames[46]}}">Dec [sexagesimal]</option>
+                <option value = "{{colNames[47]}}">RA [decimal degrees]</option>
+                <option value = "{{colNames[49]}}">Dec [decimal degrees]</option>
+                <option value = "{{colNames[52]}}">Distance [pc]</option>
+                <option value = "{{colNames[57]}}">Optical Magnitude [mag]</option>
+                <option value = "{{colNames[61]}}">G-band (Gaia) [mag]</option>
+                <option value = "{{colNames[64]}}">Effective Temperature [K]</option>
+                <option value = "{{colNames[69]}}">Stellar Mass [Solar mass]</option>
+                <option value = "{{colNames[74]}}">Stellar Radius [Solar radii]</option>
+            </optgroup>
+        </select>
+        </select>
+    </p>
+    <p>All graph are ploted in log scale.</p>
+</div>
+
+<div id = "graph-canvas">
+    <canvas id="Chart" width="650" height="420"></canvas>
+</div>
+
+<script>
+const ctx = document.getElementById('Chart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
 {% endblock %}
