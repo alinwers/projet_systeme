@@ -24,7 +24,7 @@ Catalog
 </form>
 
 <script>
-    var colTypes = JSON.parse({{colTypes|tojson}});
+    var colTypes = {{colTypes|tojson}};
     var comparator = document.getElementById("comparator");
     var aroundComparator = document.getElementById("aroundComparator");
     var truncatedToComparator = document.getElementById("pdtruncatedToComparator");
@@ -57,8 +57,8 @@ Catalog
     {% endfor %}
 </fieldset>
 
-
 <button onclick="exportToCSV()" style="margin-top: 15px;">Export</button>
+
 <table id = "tableData">
     <thead id = "theadData">
         <tr>
@@ -89,6 +89,40 @@ Catalog
         var column = "table ." + $(this).attr("name");
         $(column).toggle();
     });
+</script>
+
+<script>
+const colNames = {{colNamesList|tojson}};
+
+function exportToCSV() {
+    var records = {{records|tojson}}; //safe ? 
+    var csvData="";
+    
+    for (i=0;i<colNames.length;i++) {
+        csvData=csvData.concat(colNames[i],",");
+    }  
+    csvData=csvData.substring(0,csvData.length-1);
+    csvData=csvData.concat("\n");
+    
+    for (i=0;i<records.length;i++) {
+        for (j=0;j<colNames.length;j++) {
+            csvData=csvData.concat(records[i][colNames[j]],",");
+        }
+        csvData=csvData.substring(0,csvData.length-1);
+        csvData=csvData.concat("\n");
+    }
+    
+    var data = new Blob([csvData],{type:"text/plain"});
+    
+    fileURL=window.URL.createObjectURL(data);    
+    
+    var link=document.createElement("a");
+    link.setAttribute("href",fileURL);
+    link.setAttribute("download","table.csv");
+    document.body.append(link);
+    link.click();
+    link.remove();
+}
 </script>
 
 {% endblock %}
