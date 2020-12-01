@@ -4,6 +4,7 @@
 {% endblock %}
 {% block content %}
 
+<!--Macro to handle the potential presence of uncertainties next to the value-->
 {% macro valueWithUncertainty(valueKey) %}
     {% if isnan(record[valueKey]) %}
         {{"/"}}
@@ -19,9 +20,10 @@
         {% endif %}
     {% endif %}
 {% endmacro %}
-<button onclick="exportRecord()" style="/*! margin-left: auto; */margin-top: 20px;">Export</button>
 
+<button onclick="exportRecord()" style="/*! margin-left: auto; */margin-top: 20px;">Export</button>
 <script>
+<!--Export the datasheet to a downloadable png file-->
 function exportRecord() {
     const toExport = document.getElementById("recordTablesDiv");
     

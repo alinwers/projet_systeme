@@ -4,6 +4,7 @@ Catalog
 {% endblock %}
 {% block content %}
 
+<!--Search form-->
 <form method="get" action="http://localhost:5000/catalog/search">
     <select name="colName" id="colName" onChange="checkComparatorDisplaying()">
         {% for i in range(displayedColNames|length) %}
@@ -23,6 +24,7 @@ Catalog
     <button type="submit">Search</button>
 </form>
 
+<!--Script checking the column type of the selected column in the search form to display a correct comparator (or no comparator if string)-->
 <script>
     var colTypes = {{colTypes|tojson}};
     var comparator = document.getElementById("comparator");
@@ -91,11 +93,11 @@ Catalog
     });
 </script>
 
+<!--Script exporting the records into a downloadable csv file-->
 <script>
 const colNames = {{colNamesList|tojson}};
-
 function exportToCSV() {
-    var records = {{records|tojson}}; //safe ? 
+    var records = {{records|tojson}};
     var csvData="";
     
     for (i=0;i<colNames.length;i++) {
