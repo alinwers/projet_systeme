@@ -7,8 +7,36 @@ Graph
 <div id = "graph-menu">
     <p>
         <label for = "x-select"> X axis:</label>
-        <select name = "x-select">
+        <select id = "x-select">
             <option value = "">--Chose an x axis--</option>
+            <optgroup label="Planet parameters">
+                <option value = "{{colNames[5]}}" selected="selected">Number of Planets in System</option>
+                <option value = "{{colNames[6]}}">Orbital Period [days]</option>
+                <option value = "{{colNames[11]}}">Orbit Semi-Major Axis [au]</option>
+                <option value = "{{colNames[16]}}">Eccentricity</option>
+                <option value = "{{colNames[21]}}">Inclination [deg]</option>
+                <option value = "{{colNames[26]}}">Planet Mass or M*sin(i) [Jupiter mass]</option>
+                <option value = "{{colNames[32]}}">Planet Radius [Jupiter radii]</option>
+                <option value = "{{colNames[37]}}">Planet Density [g/cm**3]</option>
+            </optgroup>
+            <optgroup label="Star parameters">
+                <option value = "{{colNames[45]}}">RA [sexagesimal]</option>
+                <option value = "{{colNames[46]}}">Dec [sexagesimal]</option>
+                <option value = "{{colNames[47]}}">RA [decimal degrees]</option>
+                <option value = "{{colNames[49]}}">Dec [decimal degrees]</option>
+                <option value = "{{colNames[52]}}">Distance [pc]</option>
+                <option value = "{{colNames[57]}}">Optical Magnitude [mag]</option>
+                <option value = "{{colNames[61]}}">G-band (Gaia) [mag]</option>
+                <option value = "{{colNames[64]}}">Effective Temperature [K]</option>
+                <option value = "{{colNames[69]}}">Stellar Mass [Solar mass]</option>
+                <option value = "{{colNames[74]}}">Stellar Radius [Solar radii]</option>
+            </optgroup>
+        </select>
+    </p>
+    <p>
+        <label for = "y-select"> Y axis:</label>
+        <select id = "y-select">
+            <option value = "">--Chose an y axis--</option>
             <optgroup label="Planet parameters">
                 <option value = "{{colNames[5]}}">Number of Planets in System</option>
                 <option value = "{{colNames[6]}}">Orbital Period [days]</option>
@@ -34,33 +62,7 @@ Graph
         </select>
     </p>
     <p>
-        <label for = "y-select"> Y axis:</label>
-        <select name = "y-select">
-            <option value = "">--Chose an y axis--</option>
-            <optgroup label="Planet parameters">
-                <option value = "{{colNames[5]}}">Number of Planets in System</option>
-                <option value = "{{colNames[6]}}">Orbital Period [days]</option>
-                <option value = "{{colNames[11]}}">Orbit Semi-Major Axis [au]</option>
-                <option value = "{{colNames[16]}}">Eccentricity</option>
-                <option value = "{{colNames[21]}}">Inclination [deg]</option>
-                <option value = "{{colNames[26]}}">Planet Mass or M*sin(i) [Jupiter mass]</option>
-                <option value = "{{colNames[32]}}">Planet Radius [Jupiter radii]</option>
-                <option value = "{{colNames[37]}}">Planet Density [g/cm**3]</option>
-            </optgroup>
-            <optgroup label="Star parameters">
-                <option value = "{{colNames[45]}}">RA [sexagesimal]</option>
-                <option value = "{{colNames[46]}}">Dec [sexagesimal]</option>
-                <option value = "{{colNames[47]}}">RA [decimal degrees]</option>
-                <option value = "{{colNames[49]}}">Dec [decimal degrees]</option>
-                <option value = "{{colNames[52]}}">Distance [pc]</option>
-                <option value = "{{colNames[57]}}">Optical Magnitude [mag]</option>
-                <option value = "{{colNames[61]}}">G-band (Gaia) [mag]</option>
-                <option value = "{{colNames[64]}}">Effective Temperature [K]</option>
-                <option value = "{{colNames[69]}}">Stellar Mass [Solar mass]</option>
-                <option value = "{{colNames[74]}}">Stellar Radius [Solar radii]</option>
-            </optgroup>
-        </select>
-        </select>
+        <button onclick="updateData()">Update graph</button>
     </p>
     <p>All graph are ploted in log scale.</p>
 </div>
@@ -69,44 +71,69 @@ Graph
     <canvas id="Chart" width="650" height="420"></canvas>
 </div>
 
-<script>
-const ctx = document.getElementById('Chart').getContext('2d');
-const myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        datasets: [{
-            label: '# of Votes',
-            data: [{
-                x: 10,
-                y: 20
-            }, {
-                x: 15,
-                y: 10
-            }],
-            borderWidth: 1,
-            pointRadius: 4,
-            pointBackgroundColor: 'black',
-            fill: false,
-            showLine: false
-        }]
-    },
-    options: {
-        scales: {
-            xAxes: [{
-                type: 'logarithmic',
-                ticks: {
-                    beginAtZero: true
-                }
-            }],
-            yAxes: [{
-                type: 'logarithmic',
-                ticks: {
-                    beginAtZero: true
-                }
+<script type="text/javascript">
+    var json = {{records|tojson}};
+    /*
+    var e = document.getElementById("x-select");
+    var value = e.options[e.selectedIndex].value;   //get the name of the displayed column
+    var text = e.options[e.selectedIndex].text;     //get the displayed name of the column
+    var firstValue = json[0][e.value]               //get the value of the column for element 0
+    console.log(value);
+    console.log(text);
+    console.log(firstValue);
+    */
+    
+
+
+
+    const ctx = document.getElementById('Chart').getContext('2d');
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [{
+                data: [0, 10, 5, 20, 30, 45],
+                borderWidth: 1,
+                pointRadius: 4,
+                pointBackgroundColor: 'black',
+                fill: false,
+                showLine: false
             }]
-            
+        },
+        options: {
+            legend: {
+                display: false,
+            },
+            scales: {
+                xAxes: [{
+                    type: 'logarithmic',
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }],
+                yAxes: [{
+                    type: 'logarithmic',
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
         }
+    });
+
+    function getXAxis() {
+        var axis = document.getElementsByName("x-select");
+        var axisValue = axis.value;
+        return axisValue;
     }
-});
+
+    function getYAxis() {
+        var axis = document.getElementsByName("y-select");
+        var axisValue = axis.value;
+        return axisValue;
+    }
+
+    function updateData() {
+
+    }
 </script>
 {% endblock %}
