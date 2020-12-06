@@ -51,7 +51,7 @@ Catalog
     }
 </script>
 
-
+<!--Checkbox used for hide columns-->
 <fieldset>
     {% for col in colNames %}
         <input type = "checkbox" name = "{{col}}" checked = "checked">
@@ -61,6 +61,7 @@ Catalog
 
 <button onclick="exportToCSV()" style="margin-top: 15px;">Export</button>
 
+<!--Data table-->
 <table id = "tableData">
     <thead id = "theadData">
         <tr>
@@ -81,6 +82,7 @@ Catalog
     </tbody> 
 </table>
 
+<!--Script for hiding columns in the table-->
 <script>
     $("input:checkbox:not(:checked)").each(function() {
         var column = "table ." + $(this).attr("name");
