@@ -61,30 +61,47 @@ Graph
             </optgroup>
         </select>
     </p>
-    <p>
-        <button onclick="updateData()">Update graph</button>
-    </p>
+    <p><button onclick="updateData()">Update graph</button></p>
     <p>All graph are ploted in log scale.</p>
+    <p><button onclick="downloadGraph()">Download as png</button></p>
 </div>
 
 <div id = "graph-canvas">
     <canvas id="Chart" width="650" height="420"></canvas>
 </div>
 
+
 <script type="text/javascript">
     var json = {{records|tojson}};
-    /*
-    var e = document.getElementById("x-select");
-    var value = e.options[e.selectedIndex].value;   //get the name of the displayed column
-    var text = e.options[e.selectedIndex].text;     //get the displayed name of the column
-    var firstValue = json[0][e.value]               //get the value of the column for element 0
-    console.log(value);
-    console.log(text);
-    console.log(firstValue);
-    */
     
+    var xEvent = document.getElementById("x-select");
+    var xName = xEvent.options[xEvent.selectedIndex].value;     //get the name of the displayed column
+    var xValue = json[0][xEvent.value];                         //get the value of the column for element 0
+    
+    /*document.getElementById('x-select').addEventListener('change', function() {
+        console.log(this.value);
+    });
+
+    document.getElementById('y-select').addEventListener('change', function() {
+        console.log(this.value);
+    });
+    */
+    //var newJson = json.map(item => item.xEvent.value);
+    //console.log(newJson);
 
 
+    /*function getXCol() {
+        var xCol = document.getElementById("x-select");
+        xCol.addEventListener("change", function() {
+            var xName = xCol.value;
+            jsonData(xName);
+        });
+    }
+    getXCol();*/
+    //console.log(jsonData(json, document.getElementById("x-select").value))
+
+    //xCol = document.getElementById('x-select').addEventListener('change', function() {console.log(this.value);});
+    //console.log(xCol);
 
     const ctx = document.getElementById('Chart').getContext('2d');
     const myChart = new Chart(ctx, {
@@ -120,6 +137,8 @@ Graph
         }
     });
 
+    var image = myChart.toBase64Image();
+
     function getXAxis() {
         var axis = document.getElementsByName("x-select");
         var axisValue = axis.value;
@@ -134,6 +153,17 @@ Graph
 
     function updateData() {
 
+    }
+</script>
+
+<!--Script to export graphs as png-->
+<script type = "text/javascript">
+    function downloadGraph() {
+        var a = document.createElement('a');
+        a.href = myChart.toBase64Image();
+        a.download = 'graphic.png';
+    
+        a.click();  // Trigger the download
     }
 </script>
 {% endblock %}
