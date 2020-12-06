@@ -21,21 +21,52 @@
     {% endif %}
 {% endmacro %}
 
-<button onclick="exportRecord()" style="/*! margin-left: auto; */margin-top: 20px;">Export</button>
+<button onclick="exportRecordPNG()" style="/*! margin-left: auto; */margin-top: 20px;">Export to PNG</button>
+<button onclick="exportRecordPDF()" style="/*! margin-left: auto; */margin-top: 20px;">Export to PDF</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script>
+<!--Export the datasheet to a downloadable pdf file-->
+function exportRecordPDF() {
+    var doc = new jsPDF();
+    var toExport = $('#recordTablesDiv').html();
+    var specialElementHandlers = {};
+    
+    doc.fromHTML(toExport, 15, 15, {
+        'width': 200,
+        'elementHandlers': specialElementHandlers
+    });
+    
+    var name = $('#planetName').html();
+    name.concat('.pdf');
+
+    doc.save(name);
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 <script>
 <!--Export the datasheet to a downloadable png file-->
-function exportRecord() {
-    const toExport = document.getElementById("recordTablesDiv");
-    
-    html2canvas(document.querySelector("#capture")).then(canvas => {
-        document.body.appendChild(canvas)
-    });
+function exportRecordPNG() {
+
+    var name = $('#planetName').html();
+    name.concat('.png');
+
+    html2canvas(document.getElementById("recordTablesDiv"), 
+        {
+          onrendered: function (canvas) {
+            var a = document.createElement('a');
+            a.href = canvas.toDataURL();
+            a.download = name;
+            a.click();
+            a.remove();
+          }
+        });
 
 }
 </script>
 
 <div class="recordTablesDiv" id="recordTablesDiv">
-    <h1>Planet {{record["pl_name"]}}</h1>
+    <h1 id="planetName">Planet {{record["pl_name"]}}</h1>
 
     <div class="leftTables">
         <table class="recordTable" id="discoveryTable">
@@ -87,7 +118,5 @@ function exportRecord() {
         </table>
     </div>
 </div>
-
-
 
 {% endblock %}
