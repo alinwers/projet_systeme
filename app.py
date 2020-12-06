@@ -165,5 +165,5 @@ def refresh():
 #Return graphs made from database
 @app.route("/graph/")
 def graph():
-    return render_template("graph.html")
+    return render_template("graph.html", colNames = colNames, records=records)
 
