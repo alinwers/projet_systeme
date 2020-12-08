@@ -83,13 +83,14 @@ Graph
 
 
 
-
+    //Detect the value of the dropdown menus 
     function val() {
         var xSelectValue = $('#x-select').find(":selected").val();
         var ySelectValue = $('#y-select').find(":selected").val();
         return [xSelectValue, ySelectValue];
     }
 
+    //Create an array that contains the data
     function getData(dataArray) {
         var values = val();
         var xValue = values[0];
@@ -114,7 +115,7 @@ Graph
         return myData.data;
     }
 
-
+    //Create a Chart.js graph (see https://www.chartjs.org/ for documentation)
     const ctx = document.getElementById('Chart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'line',
@@ -157,7 +158,7 @@ Graph
 
 
 
-//Function to export graphs as png
+    //Function to export graphs as png
     function downloadGraph() {
         var a = document.createElement('a');
         a.href = myChart.toBase64Image();
