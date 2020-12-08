@@ -7,10 +7,10 @@ Graph
 <div id = "graph-menu">
     <p>
         <label for = "x-select"> X axis:</label>
-        <select id = "x-select">
+        <select onchange="val()" id = "x-select">
             <option value = "">--Chose an x axis--</option>
             <optgroup label="Planet parameters">
-                <option value = "{{colNames[5]}}" selected="selected">Number of Planets in System</option>
+                <option value = "{{colNames[5]}}">Number of Planets in System</option>
                 <option value = "{{colNames[6]}}">Orbital Period [days]</option>
                 <option value = "{{colNames[11]}}">Orbit Semi-Major Axis [au]</option>
                 <option value = "{{colNames[16]}}">Eccentricity</option>
@@ -35,7 +35,7 @@ Graph
     </p>
     <p>
         <label for = "y-select"> Y axis:</label>
-        <select id = "y-select">
+        <select onchange="val()" id = "y-select">
             <option value = "">--Chose an y axis--</option>
             <optgroup label="Planet parameters">
                 <option value = "{{colNames[5]}}">Number of Planets in System</option>
@@ -62,6 +62,7 @@ Graph
         </select>
     </p>
     <p><button onclick="updateData()">Update graph</button></p>
+    <p>For a better visibility, only 1000 points are represented.</p>
     <p>All graph are ploted in log scale.</p>
     <p><button onclick="downloadGraph()">Download as png</button></p>
 </div>
@@ -72,45 +73,56 @@ Graph
 
 
 <script type="text/javascript">
-    var json = {{records|tojson}};
-    
-    var xEvent = document.getElementById("x-select");
-    var xName = xEvent.options[xEvent.selectedIndex].value;     //get the name of the displayed column
-    var xValue = json[0][xEvent.value];                         //get the value of the column for element 0
-    
-    /*document.getElementById('x-select').addEventListener('change', function() {
-        console.log(this.value);
-    });
+    var initJson = {{records|tojson}};
 
-    document.getElementById('y-select').addEventListener('change', function() {
-        console.log(this.value);
-    });
-    */
-    //var newJson = json.map(item => item.xEvent.value);
-    //console.log(newJson);
-
-
-    /*function getXCol() {
-        var xCol = document.getElementById("x-select");
-        xCol.addEventListener("change", function() {
-            var xName = xCol.value;
-            jsonData(xName);
-        });
+    var dataArray = [];
+    for (var i in initJson) {
+        var item = initJson[i];
+        dataArray.push(item);
     }
-    getXCol();*/
-    //console.log(jsonData(json, document.getElementById("x-select").value))
 
-    //xCol = document.getElementById('x-select').addEventListener('change', function() {console.log(this.value);});
-    //console.log(xCol);
+
+
+
+    function val() {
+        var xSelectValue = $('#x-select').find(":selected").val();
+        var ySelectValue = $('#y-select').find(":selected").val();
+        return [xSelectValue, ySelectValue];
+    }
+
+    function getData(dataArray) {
+        var values = val();
+        var xValue = values[0];
+        var yValue = values[1];
+
+        var myData = {
+            data: []
+        };
+        
+        for (var i in dataArray) {
+            if (i < 1000) {
+                var item = dataArray[i];
+                var xItem = item[xValue];
+                var yItem = item[yValue];
+
+                myData.data.push({
+                    "x" : xItem,
+                    "y" : yItem
+                });
+            }
+        }
+        return myData.data;
+    }
+
 
     const ctx = document.getElementById('Chart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'line',
         data: {
             datasets: [{
-                data: [0, 10, 5, 20, 30, 45],
+                data: getData(dataArray),
                 borderWidth: 1,
-                pointRadius: 4,
+                pointRadius: 3,
                 pointBackgroundColor: 'black',
                 fill: false,
                 showLine: false
@@ -137,27 +149,15 @@ Graph
         }
     });
 
-    var image = myChart.toBase64Image();
-
-    function getXAxis() {
-        var axis = document.getElementsByName("x-select");
-        var axisValue = axis.value;
-        return axisValue;
-    }
-
-    function getYAxis() {
-        var axis = document.getElementsByName("y-select");
-        var axisValue = axis.value;
-        return axisValue;
-    }
 
     function updateData() {
-
+        myChart.data.datasets[0].data = getData(dataArray);
+        myChart.update();
     }
-</script>
 
-<!--Script to export graphs as png-->
-<script type = "text/javascript">
+
+
+//Function to export graphs as png
     function downloadGraph() {
         var a = document.createElement('a');
         a.href = myChart.toBase64Image();
