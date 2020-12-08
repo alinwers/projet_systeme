@@ -7,7 +7,7 @@ Graph
 <div id = "graph-menu">
     <p>
         <label for = "x-select"> X axis:</label>
-        <select onchange="val()" id = "x-select">
+        <select onchange="getVal()" id = "x-select">
             <option value = "">--Chose an x axis--</option>
             <optgroup label="Planet parameters">
                 <option value = "{{colNames[5]}}">Number of Planets in System</option>
@@ -35,7 +35,7 @@ Graph
     </p>
     <p>
         <label for = "y-select"> Y axis:</label>
-        <select onchange="val()" id = "y-select">
+        <select onchange="getVal()" id = "y-select">
             <option value = "">--Chose an y axis--</option>
             <optgroup label="Planet parameters">
                 <option value = "{{colNames[5]}}">Number of Planets in System</option>
@@ -84,7 +84,7 @@ Graph
 
 
     //Detect the value of the dropdown menus 
-    function val() {
+    function getVal() {
         var xSelectValue = $('#x-select').find(":selected").val();
         var ySelectValue = $('#y-select').find(":selected").val();
         return [xSelectValue, ySelectValue];
@@ -92,7 +92,7 @@ Graph
 
     //Create an array that contains the data
     function getData(dataArray) {
-        var values = val();
+        var values = getVal();
         var xValue = values[0];
         var yValue = values[1];
 
