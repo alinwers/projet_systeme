@@ -30,7 +30,8 @@ def loadJson():
                     else:
                         colTypes.append(typeStr)
                     break
-        #Truncate data to 6 digits        
+        
+        #Truncate data to 6 digits      
         for i in range(len(records)):
             for j in range(len(colNames)):
                 if (colTypes[j]=="float" or colTypes[j]=="double") and str(records[i][colNames[j]]) != "nan":
@@ -165,5 +166,6 @@ def refresh():
 #Return graphs made from database
 @app.route("/graph/")
 def graph():
-    return render_template("graph.html", colNames = colNames, records=records)
+    return render_template("graph.html",colNames = colNames, records=records)
 
+app.run()
