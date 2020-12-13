@@ -1,0 +1,152 @@
+.message {
+    font-weight: 600;
+    color: blue;
+}
+
+
+
+/* layout.html elements */
+.navbar {
+    background-color: lightslategray;
+    font-size: 1em;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: white;
+    padding: 8px 5px 8px 5px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.navbar-brand {
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.navbar-item {
+    font-variant: small-caps;
+    margin-left: 30px;
+}
+
+.body-content {
+    padding: 5px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+hr {
+    clear: both;
+    border: none;
+    border-bottom: 2px solid;
+    padding-top: 20px;
+}
+
+
+
+/* record.html elements */
+#exportButtons {
+    margin-left: auto;
+    margin-top: 20px;
+}
+
+.recordTable {
+    border-collapse: collapse;
+}
+
+.recordTable td:not(.recordHead) {
+    border-top-color: lightgrey;
+    border-bottom-color: lightgrey;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 30px;
+    padding-left: 10px;
+    background-color: whitesmoke;
+}
+
+.maxError {
+    font-size: 70%;
+    position: absolute;
+    margin-left: 0.2em;
+    line-height: 0.4em;
+}
+
+.minError {
+    font-size: 70%;
+    margin-left: 0.4em;
+}
+
+.leftTables {
+    float: left;
+}
+
+.rightTables {
+    float: right;
+}
+
+#recordTablesDiv {
+    width: 55%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+/* catalog.html elements */
+#tableData {
+    margin-top: 20px;
+    border-spacing: 0;
+}
+
+#tableData th {
+    padding: 5px;
+}
+
+#tableData tr:hover {
+    background-color: lightgrey;
+}
+
+#tableData .border {
+    outline: thin solid;
+}
+
+tr .border {
+    outline: thin solid;
+}
+
+#theadData {
+    text-align: center;
+    background-color: lightgray;
+    width: auto;
+    font-size: 0.9em;
+    outline: thin solid;
+}
+
+#tdData {
+    width: auto;
+    overflow: hidden;
+    text-align: center;
+    padding: 5px;
+}
+
+.row:hover {
+    background-color: lightgrey;
+}
+
+#searchForm {
+    margin-top: 15px;
+}
+
+#fieldSetColumns {
+    margin-top: 15px;
+}
+
+#exportToCSVButton {
+   margin-top: 15px; 
+}
+
+
+
