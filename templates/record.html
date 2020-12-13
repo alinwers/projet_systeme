@@ -9,30 +9,34 @@
     {% if isnan(record[valueKey]) %}
         {{"/"}}
     {% else %}
-        <span>{{record[valueKey]}}</span>
+        <span>{{record[valueKey]}}
         {% if not isnan(record[valueKey+"err1"]) %}
             {% if record[valueKey+"err1"]==-record[valueKey+"err2"] %}
-                <span>±{{record[valueKey+"err1"]}}</span>
+                ±{{record[valueKey+"err1"]}}
             {% else %}
                 <sup class="maxError">+{{record[valueKey+"err1"]}}</sup>
                 <sub class="minError">{{record[valueKey+"err2"]}}</sub>
             {% endif %}
+        </span>
         {% endif %}
     {% endif %}
 {% endmacro %}
 
-<button onclick="exportRecordPNG()" style="/*! margin-left: auto; */margin-top: 20px;">Export to PNG</button>
-<button onclick="exportRecordPDF()" style="/*! margin-left: auto; */margin-top: 20px;">Export to PDF</button>
+<div id="exportButtons" data-html2canvas-ignore="true">
+<button onclick="exportRecordPNG()">Export to PNG</button>
+<button onclick="exportRecordPDF()">Export to PDF</button>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
 <script>
-//Export the datasheet to a downloadable pdf file
+//Export the datasheet to a downloadable pdf file (have rendering bug)
 function exportRecordPDF() {
     var doc = new jsPDF();
-    var toExport = $('#recordTablesDiv').html();
+    var toExport = $('#recordTablesDiv').get(0);
     var specialElementHandlers = {};
     
     doc.fromHTML(toExport, 15, 15, {
-        'width': 200,
+        'width': 400,
         'elementHandlers': specialElementHandlers
     });
     
@@ -51,8 +55,8 @@ function exportRecordPNG() {
     var name = $('#planetName').html();
     name.concat('.png');
 
-    html2canvas(document.getElementById("recordTablesDiv"), 
-        {
+    html2canvas(document.body, 
+        { 
           onrendered: function (canvas) {
             var a = document.createElement('a');
             a.href = canvas.toDataURL();
@@ -65,12 +69,11 @@ function exportRecordPNG() {
 }
 </script>
 
-<div class="recordTablesDiv" id="recordTablesDiv">
+<div id="recordTablesDiv">
     <h1 id="planetName">Planet {{record["pl_name"]}}</h1>
-
     <div class="leftTables">
         <table class="recordTable" id="discoveryTable">
-            <h2>Discovery characteristics</h2>
+            <tr><td class="recordHead"><h2>Discovery characteristics</h2></td><td class="recordHead"></td></tr>
             <tr><td>Discovery Method</td><td>{{record["pl_discmethod"]}}</td></tr>
             <tr><td>TTV from another planet</td><td>{%if record["pl_ttvflag"]==0%}{{"No"}}{%elif record["pl_ttvflag"]==1%}{{"Yes"}}{%endif%}</td></tr>
             <tr><td>Planetary system signature in data of Kepler mission</td><td>{%if record["pl_kepflag"]==0%}{{"No"}}{%elif record["pl_kepflag"]==1%}{{"Yes"}}{%endif%}</td></tr>
@@ -81,7 +84,7 @@ function exportRecordPNG() {
         </table>
 
         <table class="recordTable" id="astrometryTable">
-            <h2>Astrometric characteristics</h2>
+            <tr><td class="recordHead"><h2>Astrometric characteristics</h2></td><td class="recordHead"></td></tr>
             <tr><td>RA [sexagesimal]</td><td>{{record["ra_str"]}}</td></tr>
             <tr><td>Dec [sexagesimal]</td><td>{{record["dec_str"]}}</td></tr>
             <tr><td>Distance [pc]</td><td>{{valueWithUncertainty("st_dist")}}</td></tr>
@@ -91,7 +94,7 @@ function exportRecordPNG() {
         </table>
 
         <table class="recordTable" id="physicalTable">
-            <h2>Physical characteristics</h2>
+            <tr><td class="recordHead"><h2>Physical characteristics</h2></td><td class="recordHead"></td></tr>
             <tr><td>Planet Mass or M*sin(i) [Jupiter Mass]</td><td>{{valueWithUncertainty("pl_bmassj")}}</td></tr>
             <tr><td>Planet Mass or M*sin(i) Provenance</td><td>{{record["pl_bmassprov"]}}</td></tr>
             <tr><td>Planet Radius [Jupiter radii]</td><td>{{valueWithUncertainty("pl_radj")}}</td></tr>
@@ -101,7 +104,7 @@ function exportRecordPNG() {
 
     <div class="rightTables">
         <table class="recordTable" id="orbitTable">
-            <h2>Orbital characteristics</h2>
+            <tr><td class="recordHead"><h2>Orbital characteristics</h2></td><td class="recordHead"></td></tr>
             <tr><td>Orbital Period [days]</td><td>{{valueWithUncertainty("pl_orbper")}}</td></tr>
             <tr><td>Orbit Semi-Major Axis [au]</td><td>{{valueWithUncertainty("pl_orbsmax")}}</td></tr>
             <tr><td>Eccentricity</td><td>{{valueWithUncertainty("pl_orbeccen")}}</td></tr>
@@ -109,7 +112,7 @@ function exportRecordPNG() {
         </table>
 
         <table class="recordTable" id="starTable">
-            <h2>Star characteristics</h2>
+            <tr><td class="recordHead"><h2>Star characteristics</h2></td><td class="recordHead"></td></tr>
             <tr><td>Host Name</td><td>{{record["pl_hostname"]}}</td></tr>
             <tr><td>Number of Planets in System</td><td>{{record["pl_pnum"]}}</td></tr>
             <tr><td>Effective Temperature [K]</td><td>{{valueWithUncertainty("st_teff")}}</td></tr>

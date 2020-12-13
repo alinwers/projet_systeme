@@ -8,7 +8,7 @@
     </head>
 
     <body>
-        <div class="navbar">
+        <div class="navbar" data-html2canvas-ignore="true">
             <a href="{{ url_for('home') }}" class="navbar-brand">Home</a>
             <a href="{{ url_for('catalog') }}" class="navbar-brand">Catalog</a>
             <a href="{{ url_for('graph') }}" class="navbar-brand">Graph</a>
@@ -17,8 +17,9 @@
         <div class="body-content">
             {% block content %}
             {% endblock %}
-            <hr/>
-            <footer>
+            
+            <footer data-html2canvas-ignore="true">
+                <hr/>
                 <p>© 2020</p>
             </footer>
         </div>

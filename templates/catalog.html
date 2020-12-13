@@ -5,7 +5,7 @@ Catalog
 {% block content %}
 
 <!--Search form-->
-<form method="get" action="http://localhost:5000/catalog/search">
+<form method="get" action="http://localhost:5000/catalog/search" id="searchForm">
     <select name="colName" id="colName" onChange="checkComparatorDisplaying()">
         {% for i in range(displayedColNames|length) %}
         <option value={{i}}>{{displayedColNames[i]}}</option>
@@ -52,14 +52,14 @@ Catalog
 </script>
 
 <!--Checkbox used to hide columns-->
-<fieldset>
+<fieldset id="fieldSetColumns">
     {% for col in colNames %}
         <input type = "checkbox" name = "{{col}}" checked = "checked">
         <label for="col">{{displayedColNames[loop.index0]}}</label>
     {% endfor %}
 </fieldset>
 
-<button onclick="exportToCSV()" style="margin-top: 15px;">Export</button>
+<button onclick="exportToCSV()" id="exportToCSVButton">Export</button>
 
 <!--Data table-->
 <table id = "tableData">
