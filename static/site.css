@@ -140,3 +140,18 @@ tr .border {
 #exportToCSVButton {
    margin-top: 15px; 
 }
+
+/* graph.html elements */
+#graph-menu {
+    position: absolute;
+    left: 800px;
+    top: 180px;
+}
+
+#graph-canvas {
+    padding-top: 1cm;
+    padding-left: 1cm;
+    position: static;
+    width: 650px;
+    height: 420px;
+}
