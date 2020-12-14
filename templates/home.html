@@ -3,6 +3,11 @@
 Home
 {% endblock %}
 {% block content %}
-<p>Home page.</p>
+<p>This app was created as part of a system course project.</p>
+<p>
+    We built an app which get a data base from the site <a href = "https://exoplanetarchive.ipac.caltech.edu/">exoplanetarchive</a> and with this data, we created a few tools like a<br>
+    table which contains all the data or a tool to create graphs. You can also choose to search a specific element of the table thanks to a research bar and<br>
+    if you click on an item of the table, it will redirect you to a form containing all the data of the selected element.</p>
+<p>To be sure to have the latest data available, click on the button below.</p>
 <button onclick="location.href='/refresh/'">Refresh Database</button>
 {% endblock %}
