@@ -1,8 +1,4 @@
-.message {
-    font-weight: 600;
-    color: blue;
-}
-
+/* layout.html elements */
 .navbar {
     background-color: lightslategray;
     font-size: 1em;
@@ -31,15 +27,26 @@
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.row:hover {
-    background-color: lightgrey;
+hr {
+    clear: both;
+    border: none;
+    border-bottom: 2px solid;
+    padding-top: 20px;
+}
+
+
+
+/* record.html elements */
+#exportButtons {
+    margin-left: auto;
+    margin-top: 20px;
 }
 
 .recordTable {
     border-collapse: collapse;
 }
 
-.recordTable td {
+.recordTable td:not(.recordHead) {
     border-top-color: lightgrey;
     border-bottom-color: lightgrey;
     border-top-style: solid;
@@ -73,12 +80,15 @@
     float: right;
 }
 
-.recordTablesDiv {
+#recordTablesDiv {
     width: 55%;
     margin-left: auto;
     margin-right: auto;
 }
 
+
+
+/* catalog.html elements */
 #tableData {
     margin-top: 20px;
     border-spacing: 0;
@@ -115,21 +125,18 @@ tr .border {
     padding: 5px;
 }
 
-hr {
-    clear: both;
-    border: none;
-    border-bottom: 2px solid;
-    padding-top: 20px;
+.row:hover {
+    background-color: lightgrey;
 }
 
-#graph-menu {
-    position: absolute;
-    left: 800px;
-    top: 180px;
+#searchForm {
+    margin-top: 15px;
 }
 
-#graph-canvas {
-    position: static;
-    width: 650px;
-    height: 420px;
+#fieldSetColumns {
+    margin-top: 15px;
+}
+
+#exportToCSVButton {
+   margin-top: 15px; 
 }
