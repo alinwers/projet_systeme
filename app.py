@@ -162,4 +162,5 @@ def graph():
     return render_template("graph.html",colNames = colNames, records=records)
 
 #Run the Flask app
-app.run()
+if __name__ == "__main__":
+    app.run()
