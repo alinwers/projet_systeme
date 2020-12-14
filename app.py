@@ -1,6 +1,5 @@
 from flask import Flask, render_template,request
 from pandas import read_json
-from json import dumps
 from math import trunc
 from numpy import isnan
 from init_db import init_db
@@ -30,12 +29,6 @@ def loadJson():
                     else:
                         colTypes.append(typeStr)
                     break
-        
-        #Truncate data to 6 digits      
-        for i in range(len(records)):
-            for j in range(len(colNames)):
-                if (colTypes[j]=="float" or colTypes[j]=="double") and str(records[i][colNames[j]]) != "nan":
-                    records[i][colNames[j]] = truncate(records[i][colNames[j]],6)
         
         return records,colNames,colTypes 
     except IOError:
