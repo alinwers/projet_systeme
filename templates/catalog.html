@@ -74,12 +74,15 @@ Catalog
         {% for i in range(records|length) %}
         {% set link = "location.href='/record/"+i|string+"'" %}
         <tr class = "border" onclick={{link}}>
+            <!--{% for col in colNames %}
+            <td class = "{{col}}" id = "tdData">{{ records[i][col] }}</td>
+            {% endfor %}-->
+            <!--Truncate the data in the table for a better visibility-->
             {% for j in range(colNames|length) %}
-                <!-- Float values with more than 6 digits are rounded in the table, this operation leaves the data itself and the csv export untouched -->
                 {% if colTypes[j]=="float" %}
-                    <td class = "{{col}}" id = "tdData">{{ records[i][colNames[j]]|round(6) }}</td>
+                    <td class = "{{colNames[j]}}" id = "tdData">{{ records[i][colNames[j]]|round(6) }}</td>
                 {% else %}
-                    <td class = "{{col}}" id = "tdData">{{ records[i][colNames[j]] }}</td>
+                    <td class = "{{colNames[j]}}" id = "tdData">{{ records[i][colNames[j]] }}</td>
                 {% endif %}
             {% endfor %}
         </tr>
